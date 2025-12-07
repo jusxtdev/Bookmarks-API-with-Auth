@@ -13,10 +13,10 @@ class ResourceUpdate(BaseModel):
 
 class ResourceResponse(BaseModel):
     resource_id : int
-    title : int
+    title : str
     url : str
     description : str
-    user_id : int
-    user : int 
+    user_id : int | None
+    user : int | None
     create_at : datetime
     update_at : datetime

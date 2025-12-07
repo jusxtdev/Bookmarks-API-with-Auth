@@ -1,8 +1,8 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
-from app.database import Base
+from app.base import Base
 
 class Resource(Base):
     __tablename__ = 'resources'

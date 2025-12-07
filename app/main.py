@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
 from app.database import init_db
-from app.routers import ## Import routers
+from app.routers import resource
 
 app = FastAPI()
 
@@ -9,4 +9,4 @@ app = FastAPI()
 def on_startup():
     init_db()
 
-app.include_router()        ## Include routers
+app.include_router(resource.router)        ## Include routers
