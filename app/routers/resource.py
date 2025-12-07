@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from typing import Annotated
+from datetime import datetime
 
 from app.database import get_db
 
@@ -41,5 +42,22 @@ def get_resource_by_ID(resource_id : int, db : db_dependency):
     return requested
 
 # PUT Routes
+@router.put('/{resource_id}', response_model=ResourceResponse, status_code=status.HTTP_200_OK)
+def update_resource(resource_id : int ,resource_data : ResourceUpdate, db : db_dependency):
+    existing_resource = db.query(Resource).where(Resource.resource_id == resource_id).first()
+    raise_error_404(existing_resource)
+
+    update_data = resource_data.model_dump(exclude_unset=True)
+
+    for key, value in update_data.items():
+        setattr(existing_resource, key, value)
+    
+    existing_resource.update_at = datetime.now().replace(microsecond=0)
+
+    db.commit()
+    db.refresh(existing_resource)
+    return existing_resource
+
+
 
 # DELETE Routes
