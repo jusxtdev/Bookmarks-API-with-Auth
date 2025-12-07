@@ -58,6 +58,12 @@ def update_resource(resource_id : int ,resource_data : ResourceUpdate, db : db_d
     db.refresh(existing_resource)
     return existing_resource
 
-
-
 # DELETE Routes
+@router.delete('/{resource_id}', response_model=ResourceResponse, status_code=status.HTTP_200_OK)
+def delete_resource(resource_id : int, db : db_dependency):
+    requested_resource = db.query(Resource).where(Resource.resource_id == resource_id).first()
+    raise_error_404(requested_resource)
+
+    db.delete(requested_resource)
+    db.commit()
+    return requested_resource
