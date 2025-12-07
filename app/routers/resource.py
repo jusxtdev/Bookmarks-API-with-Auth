@@ -29,6 +29,16 @@ def add_resource(new_data : ResourceCreate, db : db_dependency):
     return new_resource
 
 # GET Routes
+@router.get('/', response_model=list[ResourceResponse], status_code=status.HTTP_200_OK)
+def get_resources(db : db_dependency):
+    all_resources = db.query(Resource).all()
+    return all_resources
+
+@router.get('/{resource_id}', response_model=ResourceResponse, status_code=status.HTTP_200_OK)
+def get_resource_by_ID(resource_id : int, db : db_dependency):
+    requested = db.query(Resource).where(Resource.resource_id == resource_id).first()
+    raise_error_404(requested)
+    return requested
 
 # PUT Routes
 
