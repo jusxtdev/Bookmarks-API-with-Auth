@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from app.models.users import User
 from datetime import datetime
 
 class ResourceCreate(BaseModel):
@@ -18,6 +17,6 @@ class ResourceResponse(BaseModel):
     url : str
     description : str
     user_id : int
-    user : str
+    user : int 
     create_at : datetime
     update_at : datetime
