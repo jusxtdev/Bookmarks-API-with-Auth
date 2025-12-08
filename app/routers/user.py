@@ -32,6 +32,12 @@ def get_all_users(db : db_dependency):
     all_users = db.query(User).all()
     return all_users
 
+@router.get('/{user_id}', response_model=UserResponse, status_code=status.HTTP_200_OK)
+def get_user(user_id : int, db : db_dependency):
+    requested_user = db.query(User).where(User.user_id == user_id).first()
+    raise_error_404(requested_user)
+    return requested_user
+
 # PUT Routes
 
 # DELETE Routes
