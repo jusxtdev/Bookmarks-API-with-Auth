@@ -20,3 +20,5 @@ class ResourceResponse(BaseModel):
     user : int | None
     create_at : datetime
     update_at : datetime
+
+    model_config = {"from_attributes": True}

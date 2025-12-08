@@ -1,17 +1,20 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-from app.models.resources import Resource
+from app.schemas.resource import ResourceResponse
 
 class UserCreate(BaseModel):
     username : str
     password : str
 
 class UserResponse(BaseModel):
+    user_id : int
     username : str
-    password : str
+    hashed_passw : str | None = None
     
     create_at : datetime
-    update_aat : datetime
+    update_at : datetime | None = None
 
-    resources : list[Resource]   
+    resources : list[ResourceResponse] | None = None
+    
+    model_config = {"from_attributes": True}
